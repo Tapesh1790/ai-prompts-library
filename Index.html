@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हिंदी प्रॉम्प्ट सहायक | AI प्रॉम्प्ट एप्लिकेशन</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Hind', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .prompt-card {
+            transition: all 0.3s ease;
+        }
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .category-section {
+            scroll-margin-top: 80px;
+        }
+        .search-results {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-robot text-purple-600 text-3xl mr-2"></i>
+                    <h1 class="text-xl md:text-2xl font-bold text-purple-700">हिंदी प्रॉम्प्ट सहायक</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-700 hover:text-purple-700 transition">होम</a>
+                    <a href="#categories" class="text-gray-700 hover:text-purple-700 transition">श्रेणियां</a>
+                    <a href="#search" class="text-gray-700 hover:text-purple-700 transition">खोज</a>
+                    <a href="#contact" class="text-gray-700 hover:text-purple-700 transition">संपर्क</a>
+                </nav>
+                <button class="md:hidden text-gray-700" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden mt-3 pb-2">
+                <a href="#home" class="block py-2 text-gray-700 hover:text-purple-700">होम</a>
+                <a href="#categories" class="block py-2 text-gray-700 hover:text-purple-700">श्रेणियां</a>
+                <a href="#search" class="block py-2 text-gray-700 hover:text-purple-700">खोज</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:text-purple-700">संपर्क</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-10 bg-gradient-to-br from-purple-700 to-indigo-800 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">हिंदी में AI का शक्तिशाली उपयोग करें</h1>
+                    <p class="text-lg md:text-xl mb-6">अपनी मातृभाषा में AI के साथ संवाद करने के लिए सर्वोत्तम प्रॉम्प्ट्स की खोज करें और उन्हें तुरंत उपयोग करें।</p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#categories" class="bg-white text-purple-700 hover:bg-gray-100 py-3 px-6 rounded-lg font-medium text-center">शुरू करें</a>
+                        <a href="#search" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-purple-700 py-3 px-6 rounded-lg font-medium text-center transition-colors duration-300">प्रॉम्प्ट खोजें</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="w-full max-w-md bg-white p-5 rounded-lg shadow-lg">
+                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                            <p class="text-gray-800 font-medium">एक प्रॉम्प्ट उदाहरण:</p>
+                            <p class="text-gray-700 mt-2">"मुझे एक व्यवसाय योजना बनाने में मदद करें जो ऑनलाइन हिंदी शिक्षण के लिए है। इसमें लक्षित दर्शक, मार्केटिंग रणनीति और राजस्व मॉडल शामिल करें।"</p>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg flex items-center">
+                                <i class="fas fa-copy mr-2"></i> कॉपी करें
+                            </button>
+                            <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg flex items-center">
+                                <i class="fas fa-robot mr-2"></i> AI के साथ उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">हमारी विशेषताएँ</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-purple-100 w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center">
+                        <i class="fas fa-language text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">हिंदी में AI सहायता</h3>
+                    <p class="text-gray-600">अपनी मातृभाषा में AI का उपयोग करके बाधाओं को दूर करें और बेहतर परिणाम प्राप्त करें।</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-purple-100 w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center">
+                        <i class="fas fa-search text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">त्वरित प्रॉम्प्ट खोज</h3>
+                    <p class="text-gray-600">हजारों प्रॉम्प्ट्स में से अपनी आवश्यकता के अनुसार त्वरित और सटीक खोज करें।</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-purple-100 w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center">
+                        <i class="fas fa-folder-open text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">श्रेणीबद्ध प्रॉम्प्ट्स</h3>
+                    <p class="text-gray-600">विभिन्न श्रेणियों में व्यवस्थित प्रॉम्प्ट्स के साथ आसानी से आपकी आवश्यकता खोजें।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">प्रॉम्प्ट श्रेणियाँ</h2>
+            <p class="text-center text-gray-600 mb-12">अपनी जरूरत के अनुसार प्रॉम्प्ट श्रेणी चुनें</p>
+
+            <!-- Categories Navigation -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <a href="#education" class="bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 px-4 py-2 rounded-full transition">शिक्षा</a>
+                <a href="#business" class="bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 px-4 py-2 rounded-full transition">व्यवसाय</a>
+                <a href="#creative" class="bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 px-4 py-2 rounded-full transition">रचनात्मक लेखन</a>
+                <a href="#technical" class="bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 px-4 py-2 rounded-full transition">तकनीकी</a>
+                <a href="#personal" class="bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 px-4 py-2 rounded-full transition">व्यक्तिगत विकास</a>
+                <a href="#social" class="bg-white hover:bg-purple-50 text-purple-700 border border-purple-200 px-4 py-2 rounded-full transition">सोशल मीडिया</a>
+            </div>
+
+            <!-- Education Category -->
+            <div id="education" class="category-section mb-16">
+                <div class="flex items-center mb-6">
+                    <div class="bg-purple-100 p-3 rounded-full mr-3">
+                        <i class="fas fa-graduation-cap text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">शिक्षा</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">छात्र</span>
+                            <button class="text-gray-400 hover:text-purple-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">गणित के सवालों को हल करने में मदद</h4>
+                        <p class="text-gray-600 text-sm mb-4">मुझे [विषय/अध्याय] से संबंधित इस गणितीय समस्या को हल करने के चरण-दर-चरण तरीके बताएं: [समस्या विवरण]। प्रत्येक चरण को विस्तार से समझाएं ताकि मैं इसकी अवधारणा समझ सकूं।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">शिक्षक</span>
+                            <button class="text-gray-400 hover:text-purple-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">पाठ योजना तैयार करें</h4>
+                        <p class="text-gray-600 text-sm mb-4">कक्षा [कक्षा संख्या] के छात्रों के लिए [विषय] पर एक 45-मिनट का इंटरैक्टिव पाठ योजना तैयार करें। इसमें उद्देश्य, आवश्यक सामग्री, गतिविधियाँ, मूल्यांकन विधियाँ और गृहकार्य शामिल करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">अध्ययन</span>
+                            <button class="text-gray-400 hover:text-purple-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">परीक्षा की तैयारी गाइड</h4>
+                        <p class="text-gray-600 text-sm mb-4">[परीक्षा का नाम] के लिए एक संपूर्ण अध्ययन योजना बनाएं। मुझे महत्वपूर्ण विषयों की सूची, अध्ययन के तरीके, समय प्रबंधन युक्तियां और संसाधनों की सिफारिशें दें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Category -->
+            <div id="business" class="category-section mb-16">
+                <div class="flex items-center mb-6">
+                    <div class="bg-blue-100 p-3 rounded-full mr-3">
+                        <i class="fas fa-briefcase text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">व्यवसाय</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">मार्केटिंग</span>
+                            <button class="text-gray-400 hover:text-blue-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">सोशल मीडिया कंटेंट कैलेंडर</h4>
+                        <p class="text-gray-600 text-sm mb-4">मेरे [प्रोडक्ट/सेवा] के लिए एक महीने का सोशल मीडिया कंटेंट कैलेंडर बनाएं। इसमें फेसबुक, इंस्टाग्राम और लिंक्डइन के लिए पोस्ट विचार, हैशटैग और पोस्टिंग समय शामिल करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">व्यापार योजना</span>
+                            <button class="text-gray-400 hover:text-blue-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">व्यवसाय योजना का प्रारूप</h4>
+                        <p class="text-gray-600 text-sm mb-4">[व्यवसाय का प्रकार] के लिए एक व्यापार योजना प्रारूप तैयार करें। इसमें कार्यकारी सारांश, बाजार विश्लेषण, प्रतिस्पर्धी विश्लेषण, मार्केटिंग रणनीति, वित्तीय योजना और कार्यान्वयन योजना शामिल करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">ईमेल</span>
+                            <button class="text-gray-400 hover:text-blue-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">पेशेवर ईमेल लेखन</h4>
+                        <p class="text-gray-600 text-sm mb-4">मेरे लिए [संदर्भ] से संबंधित एक पेशेवर ईमेल लिखें। मुझे [उद्देश्य] हासिल करना है और [महत्वपूर्ण बिंदु] शामिल करना है। विनम्र और पेशेवर टोन का उपयोग करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Creative Category -->
+            <div id="creative" class="category-section mb-16">
+                <div class="flex items-center mb-6">
+                    <div class="bg-yellow-100 p-3 rounded-full mr-3">
+                        <i class="fas fa-pencil-alt text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">रचनात्मक लेखन</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">कहानी</span>
+                            <button class="text-gray-400 hover:text-yellow-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">लघु कहानी लेखन</h4>
+                        <p class="text-gray-600 text-sm mb-4">मुझे [शैली/विषय] पर एक 500 शब्दों की लघु कहानी लिखकर दीजिए। कहानी में [विशेष तत्व] शामिल करें और [प्रकार] के अंत के साथ समाप्त करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">कविता</span>
+                            <button class="text-gray-400 hover:text-yellow-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">हिंदी कविता रचना</h4>
+                        <p class="text-gray-600 text-sm mb-4">[विषय/भावना] पर एक हिंदी कविता लिखें। इसे [शैली] शैली में लिखें और [विशेष तत्व] का उपयोग करें। कविता में लय और रस का ध्यान रखें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="prompt-card bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+                        <div class="flex justify-between mb-4">
+                            <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">ब्लॉग</span>
+                            <button class="text-gray-400 hover:text-yellow-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-3">आकर्षक ब्लॉग पोस्ट</h4>
+                        <p class="text-gray-600 text-sm mb-4">[विषय] पर एक 1000 शब्दों का आकर्षक ब्लॉग पोस्ट लिखें। इसमें एक आकर्षक शुरुआत, उपशीर्षक, बुलेट पॉइंट्स, और सक्रिय कॉल-टू-एक्शन शामिल करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More Categories Button -->
+            <div class="text-center mt-10">
+                <button class="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg font-medium inline-flex items-center">
+                    और श्रेणियां देखें <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">प्रॉम्प्ट खोजें</h2>
+            <p class="text-center text-gray-600 mb-10">अपनी आवश्यकता के अनुसार प्रॉम्प्ट खोजें और तुरंत उपयोग करें</p>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="relative mb-8">
+                    <input type="text" id="search-input" placeholder="किसी विषय या कीवर्ड द्वारा खोजें..." class="w-full py-4 px-6 pr-12 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none">
+                    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-purple-600">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                    <h3 class="font-medium mb-2">फिल्टर</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <select class="py-2 px-4 rounded border border-gray-300 focus:border-purple-500 focus:outline-none bg-white">
+                            <option>सभी श्रेणियां</option>
+                            <option>शिक्षा</option>
+                            <option>व्यवसाय</option>
+                            <option>रचनात्मक लेखन</option>
+                            <option>तकनीकी</option>
+                            <option>व्यक्तिगत विकास</option>
+                        </select>
+                        <select class="py-2 px-4 rounded border border-gray-300 focus:border-purple-500 focus:outline-none bg-white">
+                            <option>सभी स्तर</option>
+                            <option>आसान</option>
+                            <option>मध्यम</option>
+                            <option>उन्नत</option>
+                        </select>
+                        <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded">
+                            फिल्टर लागू करें
+                        </button>
+                    </div>
+                </div>
+
+                <div class="search-results">
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 mb-4">
+                        <div class="flex justify-between mb-2">
+                            <div>
+                                <span class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full mr-2">शिक्षा</span>
+                                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">आसान</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-purple-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-2">विज्ञान के विषय को समझाएं</h4>
+                        <p class="text-gray-600 text-sm mb-3">मुझे [विज्ञान का विषय] को एक 10 वर्षीय बच्चे को समझा सकने वाले सरल तरीके से समझाएं। उदाहरण और विजुअल एनालॉजी का उपयोग करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 mb-4">
+                        <div class="flex justify-between mb-2">
+                            <div>
+                                <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full mr-2">व्यवसाय</span>
+                                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">मध्यम</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-blue-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-2">मार्केटिंग स्ट्रेटेजी डेवलपमेंट</h4>
+                        <p class="text-gray-600 text-sm mb-3">[व्यवसाय प्रकार] के लिए एक कॉस्ट-इफेक्टिव मार्केटिंग स्ट्रेटेजी विकसित करें। मेरा लक्षित दर्शक [लक्षित समूह] है और मेरा बजट [राशि] है। ऑनलाइन और ऑफलाइन विकल्प शामिल करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 mb-4">
+                        <div class="flex justify-between mb-2">
+                            <div>
+                                <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full mr-2">रचनात्मक</span>
+                                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">उन्नत</span>
+                            </div>
+                            <button class="text-gray-400 hover:text-yellow-600">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <h4 class="font-semibold mb-2">फिल्म स्क्रिप्ट डायलॉग</h4>
+                        <p class="text-gray-600 text-sm mb-3">[फिल्म शैली] शैली में दो पात्रों के बीच एक संवाद लिखें। पात्र हैं [पात्र 1] और [पात्र 2], और वे [स्थिति] के बारे में बातचीत कर रहे हैं। संवाद में संघर्ष और भावनात्मक गहराई शामिल करें।</p>
+                        <div class="flex justify-between">
+                            <button class="text-gray-500 hover:text-gray-700 text-sm flex items-center">
+                                <i class="fas fa-copy mr-1"></i> कॉपी
+                            </button>
+                            <button class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-sm px-3 py-1 rounded-full transition">
+                                उपयोग करें
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <button class="border border-purple-600 text-purple-600 hover:bg-purple-50 py-2 px-6 rounded-lg font-medium">
+                        और परिणाम देखें
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Features -->
+    <section class="py-16 bg-gradient-to-br from-purple-800 to-indigo-900 text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">प्रीमियम फीचर्स</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg">
+                    <div class="bg-purple-500 bg-opacity-30 w-16 h-16 mb-4 rounded-full flex items-center justify-center">
+                        <i class="fas fa-bolt text-yellow-300 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">उन्नत प्रॉम्प्ट्स</h3>
+                    <p class="text-gray-200 mb-4">विशेषज्ञों द्वारा निर्मित और अनुकूलित उन्नत प्रॉम्प्ट्स तक पहुंच, जो जटिल कार्यों के लिए डिज़ाइन किए गए हैं।</p>
+                    <a href="#" class="text-yellow-300 inline-flex items-center">
+                        अधिक जानें <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg">
+                    <div class="bg-purple-500 bg-opacity-30 w-16 h-16 mb-4 rounded-full flex items-center justify-center">
+                        <i class="fas fa-history text-yellow-300 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">प्रॉम्प्ट इतिहास</h3>
+                    <p class="text-gray-200 mb-4">अपने सभी उपयोग किए गए प्रॉम्प्ट्स का इतिहास सहेजें और उन्हें आसानी से फिर से एक्सेस करें या संशोधित करें।</p>
+                    <a href="#" class="text-yellow-300 inline-flex items-center">
+                        अधिक जानें <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-lg">
+                    <div class="bg-purple-500 bg-opacity-30 w-16 h-16 mb-4 rounded-full flex items-center justify-center">
+                        <i class="fas fa-paint-brush text-yellow-300 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">प्रॉम्प्ट अनुकूलन</h3>
+                    <p class="text-gray-200 mb-4">कस्टम प्रॉम्प्ट्स बनाएं और संपादित करें, अपने उद्देश्यों के लिए उन्हें अनुकूलित करें और अपना संग्रह बनाएं।</p>
+                    <a href="#" class="text-yellow-300 inline-flex items-center">
+                        अधिक जानें <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-lg inline-block transition">
+                    प्रीमियम प्लान देखें
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">उपयोगकर्ता प्रतिक्रिया</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-purple-700 font-bold">RA</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">राहुल अग्रवाल</h4>
+                            <p class="text-gray-500 text-sm">शिक्षक, दिल्ली</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600">"इस ऐप ने मेरे शिक्षण को पूरी तरह बदल दिया है। हिंदी में AI प्रॉम्प्ट्स का उपयोग करके, मैं अपने छात्रों के लिए अधिक इंटरैक्टिव और आकर्षक सामग्री बना पाता हूं।"</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-purple-700 font-bold">PK</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">प्रिया कुमारी</h4>
+                            <p class="text-gray-500 text-sm">कंटेंट राइटर, मुंबई</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600">"अब मैं हिंदी में ब्लॉग, कहानियां और सोशल मीडिया पोस्ट्स तेजी से लिख पाती हूं। प्रॉम्प्ट्स की विविधता और गुणवत्ता अद्भुत है!"</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-purple-700 font-bold">VS</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">विकास शर्मा</h4>
+                            <p class="text-gray-500 text-sm">छोटे व्यवसाय मालिक, जयपुर</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600">"मेरे जैसे छोटे व्यवसाय के लिए गेम-चेंजर! अब मैं अपने मार्केटिंग कंटेंट, ईमेल और व्यावसायिक योजनाएं हिंदी में आसानी से बना सकता हूं।"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">अक्सर पूछे जाने वाले प्रश्न</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="mb-6 border-b border-gray-200 pb-6">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="font-semibold text-lg">यह एप्लिकेशन कैसे काम करती है?</h3>
+                        <i class="fas fa-chevron-down text-purple-600"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">यह एप्लिकेशन विभिन्न श्रेणियों में हिंदी प्रॉम्प्ट्स का एक विशाल संग्रह प्रदान करती है। आप अपनी जरूरत के अनुसार प्रॉम्प्ट खोज सकते हैं, उन्हें कॉपी कर सकते हैं, और सीधे AI सेवाओं के साथ उपयोग कर सकते हैं। प्रॉम्प्ट्स को नियमित रूप से अपडेट किया जाता है।</p>
+                    </div>
+                </div>
+                <div class="mb-6 border-b border-gray-200 pb-6">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="font-semibold text-lg">क्या मैं अपने खुद के प्रॉम्प्ट बना और सहेज सकता हूं?</h3>
+                        <i class="fas fa-chevron-down text-purple-600"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">हां, प्रीमियम सदस्यता के साथ आप अपने खुद के कस्टम प्रॉम्प्ट्स बना सकते हैं, उन्हें संपादित कर सकते हैं, और भविष्य के उपयोग के लिए सहेज सकते हैं। आप अपने प्रिय प्रॉम्प्ट्स को बुकमार्क भी कर सकते हैं।</p>
+                    </div>
+                </div>
+                <div class="mb-6 border-b border-gray-200 pb-6">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="font-semibold text-lg">क्या एप्लिकेशन का उपयोग निःशुल्क है?</h3>
+                        <i class="fas fa-chevron-down text-purple-600"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">एप्लिकेशन का मूल संस्करण निःशुल्क है, जिसमें बुनियादी प्रॉम्प्ट्स और सुविधाएँ शामिल हैं। अधिक उन्नत सुविधाओं, विशेष प्रॉम्प्ट्स और विज्ञापन-मुक्त अनुभव के लिए हमारे प्रीमियम प्लान उपलब्ध हैं।</p>
+                    </div>
+                </div>
+                <div class="mb-6 border-b border-gray-200 pb-6">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="font-semibold text-lg">कौन से AI प्लेटफॉर्म इस एप्लिकेशन के साथ संगत हैं?</h3>
+                        <i class="fas fa-chevron-down text-purple-600"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">हमारे प्रॉम्प्ट्स अधिकांश लोकप्रिय AI प्लेटफॉर्म के साथ संगत हैं, जिनमें ChatGPT, Google Bard, Claude, और कई अन्य शामिल हैं। आप इन प्रॉम्प्ट्स को किसी भी प्लेटफॉर्म पर कॉपी और पेस्ट कर सकते हैं।</p>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="font-semibold text-lg">क्या मैं प्रॉम्प्ट्स को शेयर कर सकता हूं?</h3>
+                        <i class="fas fa-chevron-down text-purple-600"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">हां, आप प्रॉम्प्ट्स को सोशल मीडिया, ईमेल या मैसेजिंग ऐप के माध्यम से शेयर कर सकते हैं। प्रीमियम उपयोगकर्ता अपने कस्टम प्रॉम्प्ट्स को समुदाय के साथ भी शेयर कर सकते हैं।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">संपर्क करें</h2>
+            <p class="text-center text-gray-600 mb-12">किसी भी प्रश्न या सुझाव के लिए हमसे संपर्क करें</p>
+            
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-purple-700 text-white p-8">
+                        <h3 class="text-xl font-bold mb-4">संपर्क जानकारी</h3>
+                        <div class="mb-4">
+                            <p class="mb-2 font-semibold">ईमेल:</p>
+                            <p class="flex items-center">
+                                <i class="far fa-envelope mr-2"></i>
+                                Tapeshgoud7@gmail.com
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <p class="mb-2 font-semibold">फोन:</p>
+                            <p class="flex items-center">
+                                <i class="fas fa-phone-alt mr-2"></i>
+                                7879429538
+                            </p>
+                        </div>
+                        <div class="mb-8">
+                            <p class="mb-2 font-semibold">सोशल मीडिया:</p>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-white hover:text-gray-200 transition">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="text-white hover:text-gray-200 transition">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="text-white hover:text-gray-200 transition">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="text-white hover:text-gray-200 transition">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="mb-2 font-semibold">कार्यालय समय:</p>
+                            <p>सोमवार - शुक्रवार: सुबह 9 बजे - शाम 6 बजे</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <h3 class="text-xl font-bold mb-4">हमें संदेश भेजें</h3>
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 mb-2">नाम</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 mb-2">ईमेल</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 mb-2">संदेश</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"></textarea>
+                            </div>
+                            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-lg font-medium transition">
+                                भेजें
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download App Section -->
+    <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">हमारी मोबाइल ऐप डाउनलोड करें</h2>
+                    <p class="mb-6">कहीं भी, कभी भी हिंदी में AI का उपयोग करने के लिए हमारी मोबाइल ऐप डाउनलोड करें। अधिक सुविधाओं और बेहतर उपयोगकर्ता अनुभव के लिए।</p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="#" class="bg-black text-white hover:bg-gray-900 py-3 px-6 rounded-lg font-medium inline-flex items-center justify-center">
+                            <i class="fab fa-google-play mr-2 text-xl"></i>
+                            <div>
+                                <div class="text-xs">डाउनलोड करें</div>
+                                <div>Google Play</div>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-black text-white hover:bg-gray-900 py-3 px-6 rounded-lg font-medium inline-flex items-center justify-center">
+                            <i class="fab fa-apple mr-2 text-xl"></i>
+                            <div>
+                                <div class="text-xs">डाउनलोड करें</div>
+                                <div>App Store</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-white p-2 rounded-3xl shadow-lg" style="max-width: 300px;">
+                        <div class="bg-purple-100 rounded-2xl p-4">
+                            <div class="bg-white rounded-xl p-4 text-center">
+                                <i class="fas fa-mobile-alt text-6xl text-purple-600 mb-3"></i>
+                                <h3 class="text-purple-700 font-bold mb-1">हिंदी प्रॉम्प्ट सहायक</h3>
+                                <p class="text-gray-500 text-sm">वर्जन 1.0.0</p>
+                                <div class="flex justify-center mt-3 text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-gray-500 ml-1 text-sm">4.8</span>
+                                </div>
+                                <button class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-lg mt-4 w-full">
+                                    डाउनलोड
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">हिंदी प्रॉम्प्ट सहायक</h3>
+                    <p class="mb-4">हिंदी भाषा में AI के साथ संवाद करने के लिए आपका अल्टीमेट सहायक। अपनी मातृभाषा में प्रौद्योगिकी का लाभ उठाएं।</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">क्विक लिंक्स</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-white transition">होम</a></li>
+                        <li><a href="#categories" class="hover:text-white transition">श्रेणियां</a></li>
+                        <li><a href="#search" class="hover:text-white transition">खोज</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">संपर्क</a></li>
+                        <li><a href="#" class="hover:text-white transition">प्रीमियम प्लान</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">सपोर्ट</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">अक्सर पूछे जाने वाले प्रश्न</a></li>
+                        <li><a href="#" class="hover:text-white transition">हेल्प सेंटर</a></li>
+                        <li><a href="#" class="hover:text-white transition">प्राइवेसी पॉलिसी</a></li>
+                        <li><a href="#" class="hover:text-white transition">टर्म्स ऑफ सर्विस</a></li>
+                        <li><a href="#" class="hover:text-white transition">कॉन्टैक्ट सपोर्ट</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">न्यूज़लेटर</h3>
+                    <p class="mb-4">नए प्रॉम्प्ट्स, फीचर्स और एक्सक्लूसिव ऑफर के बारे में अपडेट प्राप्त करें।</p>
+                    <form class="mb-2">
+                        <div class="flex">
+                            <input type="email" placeholder="आपका ईमेल" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-gray-900">
+                            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 rounded-r-lg">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <p class="text-xs">साइन अप करके, आप हमारी प्राइवेसी पॉलिसी से सहमत हैं</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center text-sm">
+                <p>&copy; 2023 हिंदी प्रॉम्प्ट सहायक। सर्वाधिकार सुरक्षित।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scrolling for Internal Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Search Functionality (Sample implementation)
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('keyup', function(e) {
+            // Demo search function - would be replaced with actual search logic
+            if (e.key === 'Enter') {
+                alert('खोज की गई: ' + this.value);
+            }
+        });
+
+        // Sample functionality for prompt copy buttons
+        document.querySelectorAll('.prompt-card button').forEach(button => {
+            if (button.textContent.trim() === 'कॉपी') {
+                button.addEventListener('click', function() {
+                    const promptText = this.closest('.prompt-card').querySelector('p').textContent;
+                    navigator.clipboard.writeText(promptText).then(() => {
+                        // Temporary visual feedback
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check mr-1"></i> कॉपी हो गया';
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                        }, 2000);
+                    });
+                });
+            }
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('section:nth-of-type(8) button').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                
+                // Toggle icon
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+    </script>
+</body>
+</html>
